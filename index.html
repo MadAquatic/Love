@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,19 +14,22 @@
       background-color: #ff0033;
       color: white;
       text-align: center;
-      padding: 50px 20px;
-      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       overflow: hidden;
     }
     h1 {
-      font-size: 3em;
+      font-size: 3.5em;
       margin-bottom: 30px;
       text-shadow: 2px 2px 5px #000;
     }
     button {
-      font-size: 1.5em;
+      font-size: 2em;
       margin: 15px;
-      padding: 15px 30px;
+      padding: 15px 40px;
       border: none;
       border-radius: 20px;
       background-color: white;
@@ -66,62 +68,56 @@
         opacity: 0;
       }
     }
+    .screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .active {
+      display: flex;
+    }
   </style>
 </head>
 <body>
-  <audio autoplay loop>
+  <audio id="bgmusic" loop>
     <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Kai_Engel/Irsens_Tale/Kai_Engel_-_Irsens_Tale_-_06_Angevin.mp3" type="audio/mp3">
     Your browser does not support the audio element.
-  </audio>
+  </audio>  <div class="hearts" id="hearts"></div>  <!-- Screens -->  <div class="screen active" id="start">
+    <h1>Welcome Tiyasha 💖</h1>
+    <button onclick="startLove()">Start</button>
+  </div>  <div class="screen" id="q1">
+    <h1>DO YOU LOVE ME?</h1>
+    <button onclick="show('yes1')">Yes 💗</button>
+    <button onclick="show('q2')">No 😅</button>
+  </div>  <div class="screen" id="yes1">
+    <h1>I KNOW, I LOVE YOU TOO 💗</h1>
+  </div>  <div class="screen" id="q2">
+    <h1>THINK AGAIN MAN,<br>I KNOW YOU LOVE ME 💗<br>SO TELL ME AGAIN?</h1>
+    <button onclick="show('yes2')">Yes 💗</button>
+    <button onclick="show('q3')">No 😅</button>
+  </div>  <div class="screen" id="yes2">
+    <h1>YEAH I WAS RIGHT<br>I LOVE YOU TOO 💗</h1>
+  </div>  <div class="screen" id="q3">
+    <h1>😭😭 OK THANK YOU FOR YOUR WAIT<br>PLEASE SELECT A OPTION TO CONTINUE 😭😭</h1>
+    <button onclick="show('final')">Yes 💗</button>
+    <button onclick="show('final')">Yes 💗</button>
+  </div>  <div class="screen" id="final">
+    <h1>HAHA AT LAST YOU SELECT YES<br>I KNEW IT FROM THE BEGINNING 💗</h1>
+  </div>  <script>
+    const screens = document.querySelectorAll('.screen');
 
-  <div class="hearts" id="hearts"></div>
-  <h1 id="question">DO YOU LOVE ME?</h1>
-  <div id="buttons">
-    <button onclick="yesClicked()">Yes 💗</button>
-    <button onclick="noClicked()">No 😅</button>
-  </div>
-
-  <script>
-    const question = document.getElementById('question');
-    const buttons = document.getElementById('buttons');
-    let noCount = 0;
-
-    function yesClicked() {
-      question.innerText = "I KNOW, I LOVE YOU TOO 💗";
-      buttons.innerHTML = '';
+    function show(id) {
+      screens.forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
     }
 
-    function noClicked() {
-      noCount++;
-      if (noCount === 1) {
-        question.innerText = "THINK AGAIN MAN, I KNOW YOU LOVE ME SO TELL ME DO YOU LOVE ME? 💗";
-        buttons.innerHTML = `
-          <button onclick="yesClickedAgain()">Yes 💗</button>
-          <button onclick="noClicked()">No 😅</button>
-        `;
-      } else if (noCount === 2) {
-        question.innerText = "YEAH I WAS RIGHT I LOVE YOU TOO 💗";
-        buttons.innerHTML = '';
-      } else {
-        question.innerText = "😭😭 OK THANK YOU FOR YOUR WAIT , PLEASE SELECT A OPTION TO CONTINUE 😭😭";
-        buttons.innerHTML = `
-          <button onclick="finalYes()">Yes 💗</button>
-          <button onclick="finalYes()">Yes 💗</button>
-        `;
-      }
+    function startLove() {
+      document.getElementById('bgmusic').play();
+      show('q1');
     }
 
-    function yesClickedAgain() {
-      question.innerText = "YEAH I WAS RIGHT I LOVE YOU TOO 💗";
-      buttons.innerHTML = '';
-    }
-
-    function finalYes() {
-      question.innerText = "HAHA AT LAST YOU SELECT YES , I KNOW FROM THE BEGINNING YOU LOVE ME 💗";
-      buttons.innerHTML = '';
-    }
-
-    // Hearts animation
+    // Floating hearts
     const heartContainer = document.getElementById('hearts');
     function createHeart() {
       const heart = document.createElement('div');
@@ -133,6 +129,5 @@
       setTimeout(() => heart.remove(), 5000);
     }
     setInterval(createHeart, 200);
-  </script>
-</body>
+  </script></body>
 </html>
