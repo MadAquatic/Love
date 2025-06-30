@@ -80,11 +80,11 @@
   </style>
 </head>
 <body>
-  <audio id="bgmusic" loop>
+  <audio id="bgmusic" loop autoplay muted>
     <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Kai_Engel/Irsens_Tale/Kai_Engel_-_Irsens_Tale_-_06_Angevin.mp3" type="audio/mp3">
     Your browser does not support the audio element.
   </audio>  <div class="hearts" id="hearts"></div>  <!-- Screens -->  <div class="screen active" id="start">
-    <h1>Welcome Tiyasha 💖</h1>
+    <h1>Hehe Pagli 💖</h1>
     <button onclick="startLove()">Start</button>
   </div>  <div class="screen" id="q1">
     <h1>DO YOU LOVE ME?</h1>
@@ -113,7 +113,19 @@
     }
 
     function startLove() {
-      document.getElementById('bgmusic').play();
+      const music = document.getElementById('bgmusic');
+      music.muted = false;
+      const playPromise = music.play();
+
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          console.log("Music started 🎶");
+        }).catch((err) => {
+          console.log("Music play failed:", err);
+          alert("Tap again to enable music 🎶");
+        });
+      }
+
       show('q1');
     }
 
